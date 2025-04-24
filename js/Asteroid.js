@@ -192,5 +192,12 @@ export class Asteroid {
       vertices[i + 2] += nz * distortion;
     }
   }
-      
+    
+  // Method to update asteroid rotation - call this in your main update loop
+  update() {
+    this.gameObject.rotation.x += this.rotationSpeed.x;
+    this.gameObject.rotation.y += this.rotationSpeed.y;
+    this.gameObject.rotation.z += this.rotationSpeed.z;
+  }
+  
 }
