@@ -68,5 +68,19 @@ export class Asteroid {
     positionAttribute.needsUpdate = true;
     geometry.computeVertexNormals();
   }
-  
+
+  applyLargeShapeVariations(vertices, radius) {
+    // Choose a random shape variation type
+    const variationType = Math.floor(Math.random() * 5);
+    
+    // Apply based on type
+    switch (variationType) {
+      case 0: // Elongated shape
+        const stretchAxis = Math.floor(Math.random() * 3);
+        const stretchFactor = 1.0 + Math.random() * 0.6;
+        for (let i = 0; i < vertices.length; i += 3) {
+          vertices[i + stretchAxis] *= stretchFactor;
+        }
+        break;
+        
 }
