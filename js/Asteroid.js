@@ -82,5 +82,36 @@ export class Asteroid {
           vertices[i + stretchAxis] *= stretchFactor;
         }
         break;
-        
+
+      case 1: // Flattened shape
+        const flattenAxis = Math.floor(Math.random() * 3);
+        const flattenFactor = 0.6 + Math.random() * 0.3;
+        for (let i = 0; i < vertices.length; i += 3) {
+          vertices[i + flattenAxis] *= flattenFactor;
+        }
+        break;
+      
+        case 2: // Ridge or crater
+        const ridgeFrequency = 2 + Math.floor(Math.random() * 3);
+        const ridgeDepth = 0.1 + Math.random() * 0.2;
+        for (let i = 0; i < vertices.length; i += 3) {
+          const x = vertices[i];
+          const y = vertices[i + 1];
+          const z = vertices[i + 2];
+          
+          const length = Math.sqrt(x * x + y * y + z * z);
+          const nx = x / length;
+          const ny = y / length;
+          
+          // Create ridge or crater based on position
+          const angle = Math.atan2(ny, nx) * ridgeFrequency;
+          const ridge = Math.sin(angle) * ridgeDepth * radius * .05;
+          
+          vertices[i] = nx * (radius + ridge);
+          vertices[i + 1] = ny * (radius + ridge);
+          vertices[i + 2] = (z / length) * (radius + ridge);
+        }
+        break;
+      
+      
 }
