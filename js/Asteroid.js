@@ -152,5 +152,45 @@ export class Asteroid {
         break;
     }
   }
+
+  applyNoiseToGeometry(geometry, radius) {
+    const positionAttribute = geometry.attributes.position;
+    const vertices = positionAttribute.array;
+    
+    // Determine noise parameters for this asteroid
+    const noiseScale = 1.0;
+    const noiseStrength = 0.1 + Math.random() * 0.1;
+    const octaves = 3 + Math.floor(Math.random() * 3);
+    const persistence = 0.5 + Math.random() * 0.2;
+    const seed = Math.floor(Math.random() * 1000);
+    
+    for (let i = 0; i < vertices.length; i += 3) {
+      const x = vertices[i];
+      const y = vertices[i + 1];
+      const z = vertices[i + 2];
+      
+      const length = Math.sqrt(x * x + y * y + z * z);
+      const nx = x / length;
+      const ny = y / length;
+      const nz = z / length;
+      
+      // Add seed offset for variety between asteroids
+      const noiseValue = this.perlin.octaveNoise(
+        nx + 0.5 + seed * 0.1, 
+        ny + 0.5 + seed * 0.1, 
+        noiseScale,
+        octaves,
+        persistence,
+        2.0
+      );
+      
+      const distortion = radius * noiseStrength * (noiseValue * 2 - 1);
+      
+      // Apply the noise distortion
+      vertices[i] += nx * distortion;
+      vertices[i + 1] += ny * distortion;
+      vertices[i + 2] += nz * distortion;
+    }
+  }
       
 }
