@@ -55,5 +55,18 @@ export class Asteroid {
     return asteroid;
   }
 
+  applyShapeVariations(geometry, radius) {
+    const positionAttribute = geometry.attributes.position;
+    const vertices = positionAttribute.array;
+    
+    // Apply large-scale shape variations first
+    this.applyLargeShapeVariations(vertices, radius);
+    
+    // Then apply fine noise details
+    this.applyNoiseToGeometry(geometry, radius);
+    
+    positionAttribute.needsUpdate = true;
+    geometry.computeVertexNormals();
+  }
   
 }
