@@ -91,7 +91,7 @@ export class Asteroid {
         }
         break;
       
-        case 2: // Ridge or crater
+      case 2: // Ridge or crater
         const ridgeFrequency = 2 + Math.floor(Math.random() * 3);
         const ridgeDepth = 0.1 + Math.random() * 0.2;
         for (let i = 0; i < vertices.length; i += 3) {
@@ -112,6 +112,41 @@ export class Asteroid {
           vertices[i + 2] = (z / length) * (radius + ridge);
         }
         break;
+      
+      case 3: // Large protrusion
+        const bumpSize = 0.5 + Math.random() * 0.3;
+        const bumpCenter = {
+          x: Math.random() * 2 - 1,
+          y: Math.random() * 2 - 1,
+          z: Math.random() * 2 - 1
+        };
+        // Normalize bump center
+        const bumpLength = Math.sqrt(bumpCenter.x*bumpCenter.x + bumpCenter.y*bumpCenter.y + bumpCenter.z*bumpCenter.z);
+        bumpCenter.x /= bumpLength;
+        bumpCenter.y /= bumpLength;
+        bumpCenter.z /= bumpLength;
+        
+        for (let i = 0; i < vertices.length; i += 3) {
+          const x = vertices[i];
+          const y = vertices[i + 1];
+          const z = vertices[i + 2];
+          
+          const length = Math.sqrt(x * x + y * y + z * z);
+          const nx = x / length;
+          const ny = y / length;
+          const nz = z / length;
+          
+          // Calculate dot product to determine position relative to bump center
+          const dot = nx * bumpCenter.x + ny * bumpCenter.y + nz * bumpCenter.z;
+          // Apply bump based on proximity to bump center
+          const bump = Math.max(0, 1 - Math.acos(dot) / (Math.PI / 2)) * bumpSize * radius;
+          
+          vertices[i] = nx * (radius + bump);
+          vertices[i + 1] = ny * (radius + bump);
+          vertices[i + 2] = nz * (radius + bump);
+        }
+        break;
+      
       
       
 }
