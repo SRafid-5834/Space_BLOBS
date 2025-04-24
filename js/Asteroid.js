@@ -147,6 +147,10 @@ export class Asteroid {
         }
         break;
       
-      
+        case 4: // Angular edges
+        // Just leave as is for some asteroids to maintain angular look
+        break;
+    }
+  }
       
 }
