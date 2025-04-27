@@ -276,3 +276,16 @@ function gameOver(restartCallback) {
     restartCallback();
   });
 }
+
+// Export all UI functions
+export {
+  createLivesUI,
+  createAlienCountUI,
+  updateAlienIndicators,
+  resetAlienIndicators,
+  createFuelGauge,
+  updateFuelGauge,
+  createDamageFlash,
+  showVictory,
+  gameOver
+};
