@@ -241,3 +241,38 @@ function showVictory(restartCallback) {
     restartCallback();
   });
 }
+
+// Game over function
+function gameOver(restartCallback) {
+  console.log("Game Over!");
+  
+  // Create game over UI
+  const gameOverScreen = document.createElement('div');
+  gameOverScreen.style.position = 'absolute';
+  gameOverScreen.style.top = '0';
+  gameOverScreen.style.left = '0';
+  gameOverScreen.style.width = '100%';
+  gameOverScreen.style.height = '100%';
+  gameOverScreen.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  gameOverScreen.style.display = 'flex';
+  gameOverScreen.style.flexDirection = 'column';
+  gameOverScreen.style.justifyContent = 'center';
+  gameOverScreen.style.alignItems = 'center';
+  gameOverScreen.style.color = 'red';
+  gameOverScreen.style.fontSize = '36px';
+  gameOverScreen.style.fontFamily = 'Arial, sans-serif';
+  
+  gameOverScreen.innerHTML = `
+    <h1>GAME OVER</h1>
+    <p>You were destroyed by the Alien Blobs!</p>
+    <button id="restart-button" style="padding: 10px 20px; font-size: 24px; margin-top: 20px;">Restart</button>
+  `;
+  
+  document.body.appendChild(gameOverScreen);
+  
+  // Add restart functionality
+  document.getElementById('restart-button').addEventListener('click', () => {
+    document.body.removeChild(gameOverScreen);
+    restartCallback();
+  });
+}
