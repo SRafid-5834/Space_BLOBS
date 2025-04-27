@@ -206,3 +206,38 @@ function createDamageFlash() {
     document.body.removeChild(flash);
   }, 200);
 }
+
+// Show victory screen
+function showVictory(restartCallback) {
+  console.log("Victory!");
+  
+  // Create victory UI
+  const victoryScreen = document.createElement('div');
+  victoryScreen.style.position = 'absolute';
+  victoryScreen.style.top = '0';
+  victoryScreen.style.left = '0';
+  victoryScreen.style.width = '100%';
+  victoryScreen.style.height = '100%';
+  victoryScreen.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  victoryScreen.style.display = 'flex';
+  victoryScreen.style.flexDirection = 'column';
+  victoryScreen.style.justifyContent = 'center';
+  victoryScreen.style.alignItems = 'center';
+  victoryScreen.style.color = 'green';
+  victoryScreen.style.fontSize = '36px';
+  victoryScreen.style.fontFamily = 'Arial, sans-serif';
+  
+  victoryScreen.innerHTML = `
+    <h1>VICTORY!</h1>
+    <p>You eliminated all the Alien Blobs!</p>
+    <button id="restart-button" style="padding: 10px 20px; font-size: 24px; margin-top: 20px;">Play Again</button>
+  `;
+  
+  document.body.appendChild(victoryScreen);
+  
+  // Add restart functionality
+  document.getElementById('restart-button').addEventListener('click', () => {
+    document.body.removeChild(victoryScreen);
+    restartCallback();
+  });
+}
