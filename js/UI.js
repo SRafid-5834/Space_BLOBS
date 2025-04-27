@@ -110,4 +110,18 @@ function updateAlienIndicators(aliens) {
       }
     }
   }
-  
+
+// Reset alien indicators for game restart
+function resetAlienIndicators() {
+    const indicators = document.querySelectorAll('.alien-indicator');
+    indicators.forEach(indicator => {
+      indicator.style.backgroundColor = '#5df15d'; // Reset to green
+      indicator.style.filter = 'none'; // Remove grayscale filter
+      
+      // Reset eyes color
+      const eyes = indicator.querySelectorAll('div');
+      eyes.forEach(eye => {
+        eye.style.backgroundColor = '#2ca82c';
+      });
+    });
+  }
