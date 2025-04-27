@@ -125,3 +125,51 @@ function resetAlienIndicators() {
       });
     });
   }
+
+// Create the fuel gauge UI
+function createFuelGauge(initialFuelLevel, gaugeHeight, gaugeWidth) {
+  // Create container
+  const fuelContainer = document.createElement('div');
+  fuelContainer.id = 'fuel-container';
+  fuelContainer.style.position = 'absolute';
+  fuelContainer.style.bottom = '20px';
+  fuelContainer.style.left = '20px';
+  fuelContainer.style.display = 'flex';
+  fuelContainer.style.flexDirection = 'column';
+  fuelContainer.style.alignItems = 'center';
+  
+  // Create gauge background/border
+  const fuelBorder = document.createElement('div');
+  fuelBorder.style.width = `${gaugeWidth}px`;
+  fuelBorder.style.height = `${gaugeHeight}px`;
+  fuelBorder.style.border = '2px solid white';
+  fuelBorder.style.borderRadius = '5px';
+  fuelBorder.style.position = 'relative';
+  fuelBorder.style.overflow = 'hidden';
+  
+  // Create fuel level indicator
+  const fuelIndicator = document.createElement('div');
+  fuelIndicator.id = 'fuel-indicator';
+  fuelIndicator.style.width = '100%';
+  fuelIndicator.style.height = '100%';
+  fuelIndicator.style.backgroundColor = '#00ff00'; // Green color for fuel
+  fuelIndicator.style.position = 'absolute';
+  fuelIndicator.style.bottom = '0';
+  fuelIndicator.style.transition = 'height 0.3s ease-out';
+  
+  // Create fuel text
+  const fuelText = document.createElement('div');
+  fuelText.textContent = 'FUEL';
+  fuelText.style.color = 'white';
+  fuelText.style.marginTop = '5px';
+  fuelText.style.fontFamily = 'Arial, sans-serif';
+  
+  // Assemble the components
+  fuelBorder.appendChild(fuelIndicator);
+  fuelContainer.appendChild(fuelBorder);
+  fuelContainer.appendChild(fuelText);
+  document.body.appendChild(fuelContainer);
+  
+  // Set initial fuel level
+  updateFuelGauge(initialFuelLevel);
+}
