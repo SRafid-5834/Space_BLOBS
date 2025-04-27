@@ -40,4 +40,53 @@ function createLivesUI(initialLives) {
     document.body.appendChild(livesContainer);
   }
 
+
+// Function to create the alien indicators UI
+function createAlienCountUI(alienCount) {
+    // Create container for alien indicators
+    const alienCountContainer = document.createElement('div');
+    alienCountContainer.id = 'alien-count-container';
+    alienCountContainer.style.position = 'absolute';
+    alienCountContainer.style.top = '20px';
+    alienCountContainer.style.right = '20px';
+    alienCountContainer.style.display = 'flex';
+    alienCountContainer.style.gap = '5px';
+    document.body.appendChild(alienCountContainer);
+    
+    // Create alien indicators
+    for (let i = 0; i < alienCount; i++) {
+      const alienIndicator = document.createElement('div');
+      alienIndicator.className = 'alien-indicator';
+      alienIndicator.style.width = '30px';
+      alienIndicator.style.height = '30px';
+      alienIndicator.style.backgroundColor = '#5df15d'; // Bright green color
+      alienIndicator.style.borderRadius = '50%'; // Circular shape
+      alienIndicator.style.border = '2px solid white'; // White border
+      alienIndicator.style.position = 'relative';
+      
+      // Add small circular eyes for detail
+      const leftEye = document.createElement('div');
+      leftEye.style.width = '5px';
+      leftEye.style.height = '5px';
+      leftEye.style.backgroundColor = '#2ca82c'; // Darker green for eyes
+      leftEye.style.borderRadius = '50%';
+      leftEye.style.position = 'absolute';
+      leftEye.style.top = '8px';
+      leftEye.style.left = '7px';
+      
+      const rightEye = document.createElement('div');
+      rightEye.style.width = '5px';
+      rightEye.style.height = '5px';
+      rightEye.style.backgroundColor = '#2ca82c'; // Darker green for eyes
+      rightEye.style.borderRadius = '50%';
+      rightEye.style.position = 'absolute';
+      rightEye.style.top = '8px';
+      rightEye.style.right = '7px';
+      
+      alienIndicator.appendChild(leftEye);
+      alienIndicator.appendChild(rightEye);
+      
+      alienCountContainer.appendChild(alienIndicator);
+    }
+  }
   
