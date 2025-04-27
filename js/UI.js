@@ -89,4 +89,25 @@ function createAlienCountUI(alienCount) {
       alienCountContainer.appendChild(alienIndicator);
     }
   }
+
+// Function to update alien indicators when an alien is destroyed
+function updateAlienIndicators(aliens) {
+    const indicators = document.querySelectorAll('.alien-indicator');
+    const aliveAliens = aliens.filter(alien => !alien.isDead).length;
+    const deadAliens = indicators.length - aliveAliens;
+    
+    // Update indicators to show dead aliens in grayscale
+    for (let i = 0; i < indicators.length; i++) {
+      if (i < deadAliens) {
+        indicators[i].style.backgroundColor = '#888888'; // Gray color
+        indicators[i].style.filter = 'grayscale(100%)';
+        
+        // Also make eyes gray
+        const eyes = indicators[i].querySelectorAll('div');
+        eyes.forEach(eye => {
+          eye.style.backgroundColor = '#555555';
+        });
+      }
+    }
+  }
   
