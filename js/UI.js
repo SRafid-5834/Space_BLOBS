@@ -188,3 +188,21 @@ function updateFuelGauge(fuelLevel) {
     fuelIndicator.style.backgroundColor = '#00ff00'; // Green when high
   }
 }
+
+// Function to create damage flash effect
+function createDamageFlash() {
+  const flash = document.createElement('div');
+  flash.style.position = 'absolute';
+  flash.style.top = '0';
+  flash.style.left = '0';
+  flash.style.width = '100%';
+  flash.style.height = '100%';
+  flash.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+  flash.style.pointerEvents = 'none';
+  document.body.appendChild(flash);
+  
+  // Remove flash after a short time
+  setTimeout(() => {
+    document.body.removeChild(flash);
+  }, 200);
+}
