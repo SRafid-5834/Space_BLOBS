@@ -173,3 +173,18 @@ function createFuelGauge(initialFuelLevel, gaugeHeight, gaugeWidth) {
   // Set initial fuel level
   updateFuelGauge(initialFuelLevel);
 }
+
+// Update the fuel gauge display
+function updateFuelGauge(fuelLevel) {
+  const fuelIndicator = document.getElementById('fuel-indicator');
+  fuelIndicator.style.height = `${fuelLevel}%`;
+  
+  // Change color based on fuel level
+  if (fuelLevel <= 20) {
+    fuelIndicator.style.backgroundColor = '#ff0000'; // Red when low
+  } else if (fuelLevel <= 50) {
+    fuelIndicator.style.backgroundColor = '#ffff00'; // Yellow when medium
+  } else {
+    fuelIndicator.style.backgroundColor = '#00ff00'; // Green when high
+  }
+}
