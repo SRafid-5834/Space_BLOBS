@@ -396,3 +396,34 @@ function init() {
   // First call to animate
   animate();
 }
+
+// Function to control our player
+function controlPlayer() {
+  // Update player's topSpeed based on overdrive state
+  player.topSpeed = overdrive ? 120 : 12; // 10x speed when in overdrive
+
+  // Get the player's forward direction
+  const forwardDirection = new THREE.Vector3();
+  player.gameObject.getWorldDirection(forwardDirection);
+  // Normalize the direction and scale it for movement
+  forwardDirection.normalize();
+  
+  // Apply overdrive multiplier if shift is pressed and fuel is available
+  const speedMultiplier = (overdrive && !isFuelDepleted) ? 10 : 1;
+
+  // Apply continuous movement
+  player.applyForce(forwardDirection.clone().multiplyScalar(10 * speedMultiplier));
+  
+  // Get the right direction
+  const rightDirection = new THREE.Vector3();
+  rightDirection.crossVectors(forwardDirection, new THREE.Vector3(0, 1, 0)).normalize();
+
+  // Apply left/right movement based on input
+  if (a) player.applyForce(rightDirection.clone().multiplyScalar(-10 * speedMultiplier));
+  if (d) player.applyForce(rightDirection.clone().multiplyScalar(10 * speedMultiplier));
+
+  // W moves up, S moves down on the y axis
+  if (w) player.applyForce(new THREE.Vector3(0, 10 * speedMultiplier, 0));
+  if (s) player.applyForce(new THREE.Vector3(0, -10 * speedMultiplier, 0));
+}
+
