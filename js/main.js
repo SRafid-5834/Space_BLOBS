@@ -224,3 +224,34 @@ function removeLaserBeams() {
   }
   laserBeams = [];
 }
+
+// Update the fuel level based on input
+function updateFuel(deltaTime) {
+  // Convert deltaTime to seconds
+  const seconds = deltaTime;
+  
+  // Consume fuel when using overdrive
+  if (overdrive && !isFuelDepleted) {
+    fuelLevel -= 20 * seconds; // 20% per second
+  }
+  
+  // Consume fuel when using laser beams
+  if (shooting && !isFuelDepleted) {
+    fuelLevel -= 10 * seconds; // 10% per second
+  }
+  
+  // Replenish fuel when not using abilities
+  if (!overdrive && !shooting) {
+    fuelLevel += 10 * seconds; // 10% per second
+  }
+  
+  // Clamp fuel level between 0 and 100
+  fuelLevel = Math.max(0, Math.min(100, fuelLevel));
+  
+  // Check if fuel is depleted
+  isFuelDepleted = fuelLevel <= 0;
+  
+  // Update the visual fuel gauge
+  updateFuelGauge(fuelLevel);
+}
+
