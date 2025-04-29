@@ -427,3 +427,19 @@ function controlPlayer() {
   if (s) player.applyForce(new THREE.Vector3(0, -10 * speedMultiplier, 0));
 }
 
+// Update the forward line to show the direction
+function updateForwardLine() {
+  if (!forwardLine) return;
+  
+  // Get current position
+  const startPoint = new THREE.Vector3(0, 0, 0);
+  
+  // Calculate the forward direction
+  const endPoint = new THREE.Vector3(0, 0, 2000); // 2000 units forward
+  
+  // Update the line geometry
+  const lineGeometry = new THREE.BufferGeometry().setFromPoints([startPoint, endPoint]);
+  forwardLine.geometry.dispose();
+  forwardLine.geometry = lineGeometry;
+}
+
