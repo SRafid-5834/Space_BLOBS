@@ -177,3 +177,40 @@ function createStarfield() {
   const stars = new THREE.Points(starsGeometry, starsMaterial);
   scene.add(stars);
 }
+
+// Function to create the laser beams
+function createLaserBeams() {
+  // Only create beams if there's fuel
+  if (isFuelDepleted) {
+    shooting = false;
+    return;
+  }
+  
+  // Remove any existing beams
+  removeLaserBeams();
+  
+  // Create three parallel beams
+  for (let i = -1; i <= 1; i++) {
+    const lineGeometry = new THREE.BufferGeometry();
+    const lineMaterial = new THREE.LineBasicMaterial({ 
+      color: 0x00ffff, // Cyan blueish color
+    });
+    
+    // Create points for the beam in local space
+    const points = [
+      new THREE.Vector3(i * .9, 0, 0),    // Start point with x offset for each beam
+      new THREE.Vector3(i * .9, 0, 2000)  // End point 2000 units forward
+    ];
+    
+    lineGeometry.setFromPoints(points);
+    const beam = new THREE.Line(lineGeometry, lineMaterial);
+    
+    // Set the beams position and rotation
+    // This ensures it inherits from the player properly
+    beam.position.set(0, 0, 0);
+    beam.rotation.set(0, 0, 0);
+    
+    player.gameObject.add(beam);
+    laserBeams.push(beam);
+  }
+}
