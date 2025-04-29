@@ -214,3 +214,13 @@ function createLaserBeams() {
     laserBeams.push(beam);
   }
 }
+
+// Function to remove laser beams
+function removeLaserBeams() {
+  for (let beam of laserBeams) {
+    player.gameObject.remove(beam);
+    beam.geometry.dispose();
+    beam.material.dispose();
+  }
+  laserBeams = [];
+}
