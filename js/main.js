@@ -132,3 +132,48 @@ function createForwardLine() {
   player.gameObject.add(forwardLine); // Attach to player
 }
 
+// Function to create a starfield
+function createStarfield() {
+  // Create a large sphere for the starfield
+  const skyGeometry = new THREE.SphereGeometry(1000, 32, 32); 
+  
+  // Rendered on the inside of the sphere
+  const skyMaterial = new THREE.MeshBasicMaterial({
+    color: 0x000008,
+    side: THREE.BackSide, // Render on inside
+    depthWrite: false
+  });
+  
+  // Create the starfield
+  const starfield = new THREE.Mesh(skyGeometry, skyMaterial);
+  scene.add(starfield);
+  
+  // Adding stars as textures on the starfield
+  const starsGeometry = new THREE.BufferGeometry();
+  const starsVertices = [];
+  
+  for (let i = 0; i < 10000; i++) {
+    const radius = 995; // Slightly smaller than starfield
+    const theta = 2 * Math.PI * Math.random();
+    const phi = Math.acos(2 * Math.random() - 1);
+    
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.sin(phi) * Math.sin(theta);
+    const z = radius * Math.cos(phi);
+    
+    starsVertices.push(x, y, z);
+  }
+  
+  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+  
+  const starsMaterial = new THREE.PointsMaterial({
+    size: 1.5,
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.8,
+    depthWrite: false
+  });
+  
+  const stars = new THREE.Points(starsGeometry, starsMaterial);
+  scene.add(stars);
+}
