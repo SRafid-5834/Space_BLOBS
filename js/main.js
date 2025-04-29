@@ -275,3 +275,36 @@ function damagePlayer() {
   }
 }
 
+// SKIPPING GAME RESTART LOGIC FOR NOW
+
+function initializePathfinding() {
+  // Create a graph covering the game bounds
+  const graph = new MapGraph3D(bounds, 30); // 30-unit grid cells
+  
+  // Store the graph in the scene and in THREE.Cache for global access
+  scene.alienGraph = graph;
+  THREE.Cache.add('alienGraph', graph);
+  
+  console.log("Pathfinding graph initialized");
+  
+  // Capture player's initial position
+  const initialPlayerPos = player.location.clone();
+  console.log("Player position for pathfinding:", initialPlayerPos);
+  
+  // Set all aliens to pathfind to player's initial position
+  for (let i = 0; i < aliens.length; i++) {
+    const alien = aliens[i];
+    // Making sure alien has access to scene
+    alien.scene = scene;
+    
+    // Create new pathfind state
+    const pathfindState = new PathfindState(initialPlayerPos);
+    
+    // Apply the state
+    alien.currentState = pathfindState;
+    console.log(`Setting alien ${i} to pathfind state`);
+    
+    // Enter the state explicitly
+    pathfindState.enter(alien);
+  }
+}
