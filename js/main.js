@@ -255,3 +255,23 @@ function updateFuel(deltaTime) {
   updateFuelGauge(fuelLevel);
 }
 
+// Function to handle player damage
+function damagePlayer() {
+  if (invincibilityFrames <= 0) {
+    playerLives--;
+    document.getElementById('lives-digit').textContent = playerLives;
+    
+    // Create a damage flash effect
+    createDamageFlash();
+    
+    // Set invincibility frames to prevent multiple hits
+    invincibilityFrames = 60; // About 1 second at 60fps
+    
+    // Check for game over
+    if (playerLives <= 0) {
+      isGameOver = true;
+      gameOver(restartGame);
+    }
+  }
+}
+
