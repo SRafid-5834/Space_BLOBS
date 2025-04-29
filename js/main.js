@@ -81,3 +81,32 @@ let fuelGaugeHeight = 200; // Height of the visual fuel gauge
 let fuelGaugeWidth = 30; // Width of the fuel gauge
 let isFuelDepleted = false;
 
+// MOVEMENT EVENTLISTENERS INITIALIZATION
+// Initialize booleans for controlling movement
+let w = false, a = false, s = false, d = false;
+function initEventListeners() {
+  // Key down event listener
+  document.addEventListener("keydown", function(event) {
+    if (event.code === "KeyW") w = true;
+    else if (event.code === "KeyA") a = true;
+    else if (event.code === "KeyS") s = true;
+    else if (event.code === "KeyD") d = true;
+    else if (event.code === "ShiftLeft") overdrive = true;
+    else if (event.code === "Space") {
+      shooting = true;
+      createLaserBeams();
+    }
+  });
+  
+  document.addEventListener("keyup", function(event) {
+    if (event.code === "KeyW") w = false;
+    else if (event.code === "KeyA") a = false;
+    else if (event.code === "KeyS") s = false;
+    else if (event.code === "KeyD") d = false;
+    else if (event.code === "ShiftLeft") overdrive = false;
+    else if (event.code === "Space") {
+      shooting = false;
+      removeLaserBeams();
+    }
+  });
+}
