@@ -309,6 +309,27 @@ function initializePathfinding() {
   }
 }
 
+function spawnAlien(count){
+  // Create {count} aliens at random positions
+  for (let i = 0; i < count; i++) {
+    const alien = new Alien(0x000000, player, asteroids);
+    alien.setModel(resources.get('blob'));
+    
+    // Settibg scene reference immediately
+    alien.scene = scene;
+    
+    // Random position within bounds
+    const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
+    const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
+    const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
+    
+    alien.location = new THREE.Vector3(x, y, z);
+    
+    aliens.push(alien);
+    scene.add(alien.gameObject);
+  }
+}
+
 // Setup our scene
 function init() {
   scene.background = new THREE.Color(0x000008);
@@ -340,23 +361,24 @@ function init() {
   createForwardLine();
 
   // Create 10 aliens at random positions
-  for (let i = 0; i < alienCount; i++) {
-    const alien = new Alien(0x000000, player, asteroids);
-    alien.setModel(resources.get('blob'));
+  // for (let i = 0; i < alienCount; i++) {
+  //   const alien = new Alien(0x000000, player, asteroids);
+  //   alien.setModel(resources.get('blob'));
     
-    // Settibg scene reference immediately
-    alien.scene = scene;
+  //   // Settibg scene reference immediately
+  //   alien.scene = scene;
     
-    // Random position within bounds
-    const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
-    const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
-    const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
+  //   // Random position within bounds
+  //   const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
+  //   const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
+  //   const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
     
-    alien.location = new THREE.Vector3(x, y, z);
+  //   alien.location = new THREE.Vector3(x, y, z);
     
-    aliens.push(alien);
-    scene.add(alien.gameObject);
-  }
+  //   aliens.push(alien);
+  //   scene.add(alien.gameObject);
+  // }
+  spawnAlien(alienCount); // Create alien
 
   initializePathfinding(); // Initialize pathfinding for aliens
 
