@@ -110,3 +110,25 @@ function initEventListeners() {
     }
   });
 }
+
+// Create a directional guidance line for the player
+function createForwardLine() {
+  const lineGeometry = new THREE.BufferGeometry();
+  const lineMaterial = new THREE.LineBasicMaterial({ 
+    color: 0xff0000,   // Red line
+    transparent: true,
+    opacity: 0.3       // 30% transparency
+  });
+  
+  // Initial vertices (will be updated during animation)
+  const points = [
+    new THREE.Vector3(0, 0, 0),     // Player's position
+    new THREE.Vector3(0, 0, 2000)    // Forward direction
+  ];
+  
+  lineGeometry.setFromPoints(points);
+  
+  forwardLine = new THREE.Line(lineGeometry, lineMaterial);
+  player.gameObject.add(forwardLine); // Attach to player
+}
+
