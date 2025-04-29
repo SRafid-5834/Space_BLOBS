@@ -308,3 +308,69 @@ function initializePathfinding() {
     pathfindState.enter(alien);
   }
 }
+
+// Setup our scene
+function init() {
+  scene.background = new THREE.Color(0x000008);
+  scene.add(camera);
+
+  // Renderer
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Directional Light
+  let directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+  directionalLight.position.set(0, 200, 800);
+  scene.add(directionalLight);
+
+  // Ambient Light
+  let ambient = new THREE.AmbientLight(0xffffff, .05);
+  scene.add(ambient);
+
+  // Initialize bounds
+  bounds = new THREE.Box3(
+    new THREE.Vector3(-300, -300, -300), // scene min
+    new THREE.Vector3(300, 300, 300) // scene max
+  );
+
+  // Add the player to the scene
+  scene.add(player.gameObject);
+  
+  // Create forward guidance line
+  createForwardLine();
+
+  // Create 10 aliens at random positions
+  for (let i = 0; i < alienCount; i++) {
+    const alien = new Alien(0x000000, player, asteroids);
+    alien.setModel(resources.get('blob'));
+    
+    // Settibg scene reference immediately
+    alien.scene = scene;
+    
+    // Random position within bounds
+    const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
+    const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
+    const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
+    
+    alien.location = new THREE.Vector3(x, y, z);
+    
+    aliens.push(alien);
+    scene.add(alien.gameObject);
+  }
+
+  initializePathfinding(); // Initialize pathfinding for aliens
+
+  // init event listeners
+  initEventListeners();
+
+  createStarfield(); // Create the starfield with stars
+
+
+  createLivesUI(playerLives); // Create UI for lives display
+  createAlienCountUI(alienCount); // Create UI for alien indicators
+
+  createFuelGauge(fuelLevel, fuelGaugeHeight, fuelGaugeWidth); // Create the fuel gauge UI
+
+  // First call to animate
+  animate();
+}
