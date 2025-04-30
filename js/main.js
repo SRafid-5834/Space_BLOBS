@@ -484,4 +484,87 @@ function animate() {
   for (let alien of aliens) {
     alien.update(deltaTime, bounds);
   }
+
+  // Update laser beams with raycasting if they exist
+  if (shooting && !isFuelDepleted && laserBeams.length > 0) {
+    for (let beam of laserBeams) {
+      const raycaster = new THREE.Raycaster();
+      
+      // Get player's position as origin
+      const origin = new THREE.Vector3();
+      player.gameObject.getWorldPosition(origin);
+      
+      // Get the beam's forward direction in world space
+      const beamDirection = new THREE.Vector3(0, 0, 1); // Use positive Z
+      beamDirection.applyQuaternion(player.gameObject.quaternion);
+      
+      raycaster.set(origin, beamDirection);
+      
+      // Objects to check
+      const objectsToCheck = [...asteroids, ...aliens.map(a => a.gameObject)];
+      
+      // Check for intersections
+      const intersects = raycaster.intersectObjects(objectsToCheck, true);
+      
+      // If we hit something
+      if (intersects.length > 0) {
+        const hitObject = intersects[0].object;
+        
+        // Check if the hit object belongs to an alien via the userData property
+        if (hitObject.userData && hitObject.userData.alienRef) {
+          const hitAlien = hitObject.userData.alienRef;
+          
+          if (!hitAlien.isDead) {
+            console.log("Alien hit!");
+            // Mark alien as dead
+            hitAlien.isDead = true;
+            
+            // Remove from scene
+            scene.remove(hitAlien.gameObject);
+            
+            // Remove from aliens array
+            const index = aliens.indexOf(hitAlien);
+            if (index > -1) {
+              aliens.splice(index, 1);
+            }
+            
+            // Update alien indicators
+            updateAlienIndicators(aliens);
+  
+            // Check for victory (all aliens destroyed)
+            if (aliens.length === 0) {
+              console.log("Victory! All aliens destroyed");
+              showVictory(restartGame);
+            }
+          }
+        }
+        
+        // Calculate the local space distance for beam length
+        const localPoint = player.gameObject.worldToLocal(intersects[0].point.clone());
+        
+        // Update beam geometry with correct endpoints
+        const beamOffset = new THREE.Vector3(
+          beam.geometry.attributes.position.array[0],
+          beam.geometry.attributes.position.array[1],
+          0 // Start at local origin Z
+        );
+        
+        // Create new points array
+        const points = [
+          beamOffset,
+          new THREE.Vector3(
+            beamOffset.x,
+            beamOffset.y,
+            localPoint.z // End at hit point Z in local space
+          )
+        ];
+        
+        // Update geometry
+        beam.geometry.dispose();
+        beam.geometry = new THREE.BufferGeometry().setFromPoints(points);
+      }
+
+    }
+  }
+  
 }
