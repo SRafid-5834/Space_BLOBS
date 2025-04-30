@@ -443,3 +443,45 @@ function updateForwardLine() {
   forwardLine.geometry = lineGeometry;
 }
 
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+
+  // Change in time
+  let deltaTime = clock.getDelta();
+  
+  // Update fuel based on input
+  updateFuel(deltaTime);
+
+  // Update forward guidance line
+  updateForwardLine();
+  
+  // Generate our steering force for player
+  let steer = player.avoidMultipleCollisions(asteroids, 5);
+
+  // If there is steering force
+  if (steer.length() != 0) { 
+    // Apply our steering force with higher priority
+    if (overdrive) {
+      player.applyForce(steer.clone().multiplyScalar(20));
+    }
+    player.applyForce(steer.multiplyScalar(2));
+  } else {
+    // Control our player
+    controlPlayer();
+  }
+
+  
+  // Create Third Person Camera
+  const thirdPersonCamera = new ThirdPersonCamera(camera, player.gameObject);
+
+  // Update player and camera
+  player.update(deltaTime, bounds);
+  // thirdPersonCamera.update(deltaTime);
+  thirdPersonCamera.update();
+
+  // Update all aliens
+  for (let alien of aliens) {
+    alien.update(deltaTime, bounds);
+  }
+}
