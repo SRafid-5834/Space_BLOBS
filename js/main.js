@@ -270,7 +270,7 @@ function damagePlayer() {
     // Check for game over
     if (playerLives <= 0) {
       isGameOver = true;
-      gameOver(restartGame);
+      gameOver(init);
     }
   }
 }
@@ -534,7 +534,7 @@ function animate() {
             // Check for victory (all aliens destroyed)
             if (aliens.length === 0) {
               console.log("Victory! All aliens destroyed");
-              showVictory(restartGame);
+              showVictory(init);
             }
           }
         }
@@ -599,3 +599,5 @@ function animate() {
     }
   }
 }
+
+init();
