@@ -566,5 +566,15 @@ function animate() {
 
     }
   }
-  
+
+  // Update invincibility frames
+  if (invincibilityFrames > 0) {
+    invincibilityFrames -= 1;
+    
+    // Optional: make the player blink when invincible
+    player.gameObject.visible = Math.floor(invincibilityFrames / 5) % 2 === 0;
+  } else {
+    player.gameObject.visible = true;
+  }
+
 }
