@@ -577,4 +577,25 @@ function animate() {
     player.gameObject.visible = true;
   }
 
+  // Check for collisions with aliens if not game over
+  if (!isGameOver && invincibilityFrames <= 0) { // Only check if not invincible
+    // Create a sphere around the player for collision detection
+    const playerRadius = 3; // Adjust based on your player model size
+    
+    // Check each alien
+    for (let i = 0; i < aliens.length; i++) {
+      const alien = aliens[i];
+      if (alien.isDead) continue;
+      
+      // Simple sphere-sphere collision check
+      const distanceToAlien = player.location.distanceTo(alien.location);
+      const collisionThreshold = playerRadius + 2; // 2 is approximately alien radius
+      
+      if (distanceToAlien < collisionThreshold) {
+        console.log("Player hit by alien!");
+        damagePlayer();
+        break; // Only take one hit at a time
+      }
+    }
+  }
 }
