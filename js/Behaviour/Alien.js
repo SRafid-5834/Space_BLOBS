@@ -113,4 +113,25 @@ export class Alien extends Character {
     return steer;
   }
 
+  // Seek behavior
+  seek(target) {
+    // Create vector pointing from location to target
+    let desired = new THREE.Vector3().subVectors(target, this.location);
+    
+    // Scale to maximum speed
+    desired.normalize();
+    desired.multiplyScalar(this.topSpeed);
+    
+    // Steering = Desired minus Velocity
+    let steer = new THREE.Vector3().subVectors(desired, this.velocity);
+    
+    // Limit to maximum steering force
+    if (steer.length() > this.maxForce) {
+      steer.normalize();
+      steer.multiplyScalar(this.maxForce);
+    }
+    
+    return steer;
+  }
+
 }  
