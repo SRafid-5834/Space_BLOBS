@@ -75,4 +75,15 @@ export class Alien extends Character {
     return steer;
   }
 
+  // Pursue steering behavior
+  pursue(character, lookAhead) {
+    let prediction = new THREE.Vector3();
+    prediction.addScaledVector(character.velocity, lookAhead);
+
+    let predictedTarget = new THREE.Vector3();
+    predictedTarget.addVectors(prediction, character.location);
+
+    return this.seek(predictedTarget);
+  }
+
 }  
