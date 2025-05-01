@@ -26,7 +26,7 @@ export class Alien extends Character {
     // Avoid collision method
     this.avoidCollision = this.avoidCollision.bind(this);
   }
-  
+
   setModel(model) {
     if (this.model) {
       this.group.remove(this.model);
@@ -44,4 +44,14 @@ export class Alien extends Character {
       }
     });
   }
+
+  // Update method override to incorporate state machine
+  update(deltaTime, bounds) {
+    // Update state
+    this.currentState.update(this, deltaTime);
+    
+    // Update physics and position via parent class
+    super.update(deltaTime, bounds);
+  }
+
 }  
