@@ -86,4 +86,31 @@ export class Alien extends Character {
     return this.seek(predictedTarget);
   }
 
+  // Arrive steering behavior with radius for slowing down
+  arrive(target, radius) {
+    let desired = new THREE.Vector3();
+    desired.subVectors(target, this.location);
+
+    let distance = desired.length();
+
+    if (distance < 0.01) {
+      return new THREE.Vector3();
+    } else {
+      if (distance < radius) {
+        let speed = (distance / radius) * this.topSpeed;
+        desired.setLength(speed);
+      } else {
+        desired.setLength(this.topSpeed);
+      }
+    }
+
+    let steer = new THREE.Vector3();
+    steer.subVectors(desired, this.velocity);
+
+    if (steer.length() > this.maxForce) {
+      steer.setLength(this.maxForce);
+    }
+    return steer;
+  }
+
 }  
