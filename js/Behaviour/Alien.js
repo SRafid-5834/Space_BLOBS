@@ -134,4 +134,26 @@ export class Alien extends Character {
     return steer;
   }
 
+  // Avoid collision steering behavior
+  avoidCollision(obstacle, characterToObstacle, ray) {
+    // If no valid obstacle, return zero vector
+    if (!obstacle || !obstacle.position) {
+      return new THREE.Vector3();
+    }
+
+    let steer = new THREE.Vector3();
+
+    // Project the vector from character to obstacle
+    // onto the character to the end of our ray
+    let scalarProjection = 0;
+    
+    // Calculate scalar projection only if ray has length
+    if (ray.length() > 0) {
+      let rayNormalized = ray.clone().normalize();
+      scalarProjection = characterToObstacle.dot(rayNormalized);
+    }
+
+
+  }
+
 }  
