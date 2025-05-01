@@ -54,4 +54,25 @@ export class Alien extends Character {
     super.update(deltaTime, bounds);
   }
 
+  // Wander steering behavior
+  wander() {
+    let distance = 10;
+    let radius = 10;
+    let angleOffset = 0.3;
+
+    let futureLocation = this.velocity.clone();
+    futureLocation.setLength(distance);
+    futureLocation.add(this.location);
+    
+    let target = new THREE.Vector3(radius * Math.sin(this.wanderAngle), 0, radius * Math.cos(this.wanderAngle));
+    target.add(futureLocation);
+  
+    let steer = this.seek(target);
+
+    let change = Math.random() * (angleOffset * 2) - angleOffset;
+    this.wanderAngle = this.wanderAngle + change;
+    
+    return steer;
+  }
+
 }  
