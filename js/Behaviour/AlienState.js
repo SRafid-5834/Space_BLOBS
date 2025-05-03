@@ -123,3 +123,11 @@ export class PathfindState extends AlienState {
     }
   }
 }
+
+// Wander state - random movement around the scene
+export class WanderState extends AlienState {
+  enter(alien) {
+    console.log("Alien entering Wander state");
+    // Reset any pursuit-related variables
+    alien.targetPosition = null;
+  }
