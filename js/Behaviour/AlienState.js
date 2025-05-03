@@ -91,4 +91,21 @@ export class PathfindState extends AlienState {
         currentWaypoint.y,
         currentWaypoint.z
       );
+      
+      // Calculate distance to current waypoint
+      const distanceToWaypoint = alien.location.distanceTo(target);
+      
+      // If close enough to waypoint
+      if (distanceToWaypoint < 10) { // Adjust threshold as needed
+        this.currentPathIndex++;
+        
+        // If we've reached the end of the path
+        if (this.currentPathIndex >= this.path.length) {
+          console.log("Alien reached end of path");
+          this.pathfindingComplete = true;
+          return;
+        }
+      }
+
+
 }
