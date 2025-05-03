@@ -36,5 +36,32 @@ export class PathfindState extends AlienState {
     this.pathfindingComplete = false;
   }
 
-  
+  enter(alien) {
+    console.log("Alien entering Pathfind state to initial player position");
+
+    // Set speed to pathfind speed
+    alien.topSpeed = alien.pathfindSpeed;
+    
+    // Create a path to the target position using the graph
+    const startPos = alien.location.clone();
+    
+    // Access the graph directly from the scene, not from alien.scene
+    const graph = THREE.Cache.get('alienGraph') || alien.scene?.alienGraph; 
+    
+    if (graph) {
+      this.path = graph.findPath(startPos, this.targetPosition);
+      this.currentPathIndex = 0;
+      
+      // If no path found or already at destination, transition to wander
+      if (this.path.length === 0) {
+        this.transition(alien, new WanderState());
+        return;
+      }
+      
+      console.log(`Path found with ${this.path.length} waypoints`);
+    } else {
+      console.error("No alien graph found in scene");
+      this.transition(alien, new WanderState());
+    }
+  }
 }
