@@ -131,3 +131,25 @@ export class WanderState extends AlienState {
     // Reset any pursuit-related variables
     alien.targetPosition = null;
   }
+    
+  update(alien, deltaTime) {
+    // Calculate distance to player
+    let distanceToPlayer = alien.location.distanceTo(alien.player.location);
+    
+    // Check if player is within detection radius
+    if (distanceToPlayer <= alien.detectionRadius) {
+      this.transition(alien, new PursueState());
+      return;
+    }
+    
+    // Continue wandering behavior
+    let wanderForce = alien.wander();
+    alien.applyForce(wanderForce);
+    
+    // Check for obstacle avoidance
+    let avoidForce = alien.avoidMultipleCollisions(alien.obstacles, 5);
+    if (avoidForce.length() > 0) {
+      alien.applyForce(avoidForce.multiplyScalar(2));
+    }
+  }
+}
