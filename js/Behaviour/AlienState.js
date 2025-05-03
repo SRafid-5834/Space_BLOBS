@@ -64,4 +64,31 @@ export class PathfindState extends AlienState {
       this.transition(alien, new WanderState());
     }
   }
+
+  update(alien, deltaTime) {
+    // If pathfinding is complete, transition to wander
+    if (this.pathfindingComplete) {
+      // Reset speed to normal before transitioning
+      alien.topSpeed = alien.normalSpeed;
+      this.transition(alien, new WanderState());
+      return;
+    }
+    
+    // If we have a path to follow
+    if (this.path && this.path.length > 0) {
+      // Get current waypoint
+      const currentWaypoint = this.path[this.currentPathIndex];
+      
+      if (!currentWaypoint) {
+        console.error("Invalid waypoint in path");
+        this.pathfindingComplete = true;
+        return;
+      }
+      
+      // Convert to THREE.Vector3
+      const target = new THREE.Vector3(
+        currentWaypoint.x,
+        currentWaypoint.y,
+        currentWaypoint.z
+      );
 }
