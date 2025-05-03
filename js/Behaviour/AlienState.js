@@ -91,7 +91,7 @@ export class PathfindState extends AlienState {
         currentWaypoint.y,
         currentWaypoint.z
       );
-      
+
       // Calculate distance to current waypoint
       const distanceToWaypoint = alien.location.distanceTo(target);
       
@@ -106,6 +106,20 @@ export class PathfindState extends AlienState {
           return;
         }
       }
-
-
+      
+      // Navigate to waypoint
+      const seekForce = alien.seek(target);
+      alien.applyForce(seekForce);
+      
+      // Check for obstacle avoidance
+      const avoidForce = alien.avoidMultipleCollisions(alien.obstacles, 5);
+      if (avoidForce.length() > 0) {
+        alien.applyForce(avoidForce.multiplyScalar(2));
+      }
+    } else {
+      console.warn("No path available for alien");
+      // No path, transition to wander
+      this.pathfindingComplete = true;
+    }
+  }
 }
