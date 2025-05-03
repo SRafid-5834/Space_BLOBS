@@ -161,3 +161,27 @@ export class PursueState extends AlienState {
     // Possibly increase speed or prepare for pursuit
     alien.topSpeed = alien.pursuitSpeed;
   }
+  
+  update(alien, deltaTime) {
+    // Calculate distance to player
+    let distanceToPlayer = alien.location.distanceTo(alien.player.location);
+    
+    // If player is no longer within extended detection radius, return to wandering
+    // We use a slightly larger radius for exiting pursuit to prevent rapid state switching
+    if (distanceToPlayer > alien.detectionRadius * 1.5) {
+      alien.topSpeed = alien.normalSpeed;
+      this.transition(alien, new WanderState());
+      return;
+    }
+    
+    // Continue pursuit behavior
+    let pursueForce = alien.pursue(alien.player, 1);
+    alien.applyForce(pursueForce);
+    
+    // Check for obstacle avoidance while pursuing
+    let avoidForce = alien.avoidMultipleCollisions(alien.obstacles, 5);
+    if (avoidForce.length() > 0) {
+      alien.applyForce(avoidForce.multiplyScalar(2));
+    }
+  }
+}
