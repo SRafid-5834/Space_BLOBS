@@ -25,3 +25,16 @@ export class AlienState {
     alien.currentState.enter(alien);
   }
 }
+
+export class PathfindState extends AlienState {
+  constructor(targetPosition) {
+    super();
+    this.targetPosition = targetPosition;
+    this.path = [];
+    this.currentPathIndex = 0;
+    this.reachedTarget = false;
+    this.pathfindingComplete = false;
+  }
+
+  
+}
