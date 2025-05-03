@@ -161,7 +161,7 @@ export class PursueState extends AlienState {
     // Possibly increase speed or prepare for pursuit
     alien.topSpeed = alien.pursuitSpeed;
   }
-  
+
   update(alien, deltaTime) {
     // Calculate distance to player
     let distanceToPlayer = alien.location.distanceTo(alien.player.location);
@@ -183,5 +183,25 @@ export class PursueState extends AlienState {
     if (avoidForce.length() > 0) {
       alien.applyForce(avoidForce.multiplyScalar(2));
     }
+  }
+}
+
+// Death state - alien is destroyed and should be removed
+export class DeathState extends AlienState {
+  enter(alien) {
+    console.log("Alien destroyed!");
+    // Play death animation or effect if you have one
+    alien.isDead = true;
+    
+    // Remove from scene after a short delay (optional - for death animation)
+    setTimeout(() => {
+      if (alien.gameObject.parent) {
+        alien.gameObject.parent.remove(alien.gameObject);
+      }
+    }, 300);
+  }
+  
+  update(alien, deltaTime) {
+    // No updates needed in death state
   }
 }
