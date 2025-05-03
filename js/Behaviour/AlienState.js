@@ -153,3 +153,11 @@ export class WanderState extends AlienState {
     }
   }
 }
+
+// Pursue state - actively chase the player
+export class PursueState extends AlienState {
+  enter(alien) {
+    console.log("Alien entering Pursue state");
+    // Possibly increase speed or prepare for pursuit
+    alien.topSpeed = alien.pursuitSpeed;
+  }
