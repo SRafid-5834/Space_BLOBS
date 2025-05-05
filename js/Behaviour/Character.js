@@ -115,5 +115,24 @@ export class Character {
     force.divideScalar(this.mass);
     this.acceleration.add(force);
   }
-  
+
+  // Method to avoid multiple collisions
+  avoidMultipleCollisions(obstacles, lookAhead) {
+    // If no obstacles, return zero vector
+    if (obstacles.length === 0) {
+      return new THREE.Vector3();
+    }
+    
+    let center = null;
+    // Create the center whisker based on velocity
+    if (!this.isOverdrive){
+      center = this.velocity.clone().normalize().multiplyScalar(lookAhead);
+    } else {
+      // Increase lookAhead distance when in overdrive
+      const adjustedLookAhead = this.isOverdrive ? lookAhead * 10 : lookAhead;
+      center = this.velocity.clone().normalize().multiplyScalar(adjustedLookAhead);
+    }
+    
+    
+  }
 }
