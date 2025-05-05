@@ -27,4 +27,16 @@ export class Character {
     this.isOverdrive = false;
   }
 
+  setModel(model) {
+    if (this.model) {
+      this.group.remove(this.model);
+    }
+
+    this.model = model;
+    this.model.scale.set(.6, 1, .7); // Adjust as needed
+    this.model.rotation.y = Math.PI / 1.98;
+    this.model.position.set(0.26, -4, -1.2);
+    this.gameObject.add(this.model);
+  }
+
 }
