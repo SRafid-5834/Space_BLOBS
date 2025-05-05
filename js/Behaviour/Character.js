@@ -133,6 +133,25 @@ export class Character {
       center = this.velocity.clone().normalize().multiplyScalar(adjustedLookAhead);
     }
     
+    // Clone center vector and create whiskers
+    const whiskerLength = 0.5;  // 0.5x times the center 
+    let whisker1 = center.clone().multiplyScalar(whiskerLength);
+    let whisker2 = center.clone().multiplyScalar(whiskerLength);
+
+    // Rotate whiskers around the Y-axis
+    const whiskerAngle = 50;  // angles of whiskers
+    const radian = whiskerAngle * Math.PI/180;
+    whisker1.applyAxisAngle(new THREE.Vector3(0, 1, 0), radian);
+    whisker2.applyAxisAngle(new THREE.Vector3(0, 1, 0), -radian);
+
+    // Obtain the closest obstacle
+    let obstacle = this.closestObject(obstacles);
+    
+    // If no obstacle found, return zero vector
+    if (!obstacle) {
+      return new THREE.Vector3();
+    }
+    
     
   }
 }
