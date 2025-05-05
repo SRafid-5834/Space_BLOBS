@@ -173,4 +173,23 @@ export class Character {
 
     return totalSteer;
   }
+
+  // Modify the closestObject method to also calculate and store the radius:
+  closestObject(obstacles) {
+    let closestObstacle = null;
+    let minDistance = Infinity;
+
+    for (let obstacle of obstacles) {
+      // Skip if the obstacle doesn't have a position
+      if (!obstacle.position) continue;
+      
+      let distance = this.location.distanceTo(obstacle.position);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestObstacle = obstacle;
+      }
+    }
+  
+  }
 }
