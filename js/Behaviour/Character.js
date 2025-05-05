@@ -208,5 +208,12 @@ export class Character {
         }
       }
       
+      // Default radius if we couldn't calculate one
+      if (!closestObstacle.radius) {
+        closestObstacle.radius = 5.0;  // Default radius
+      }
+    }
+
+    return closestObstacle;
   }
 }
