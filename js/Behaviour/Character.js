@@ -39,4 +39,23 @@ export class Character {
     this.gameObject.add(this.model);
   }
 
+  // Seek steering behaviour
+  seek(target) {
+
+    // Calculate desired velocity
+    let desired = VectorUtil.sub(target, this.location);
+    desired.setLength(this.topSpeed);
+  
+    // Calculate steering force
+    let steer = VectorUtil.sub(desired, this.velocity);
+
+    if (steer.length() > this.maxForce) {
+      steer.setLength(this.maxForce);
+    }
+
+    return steer;
+  }
+
+  
+
 }
