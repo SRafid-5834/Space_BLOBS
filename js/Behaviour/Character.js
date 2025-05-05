@@ -56,6 +56,23 @@ export class Character {
     return steer;
   }
 
-  
+  // Wrap around the scene
+  checkBounds(bounds) {
+    this.location.x = THREE.MathUtils.euclideanModulo(
+      this.location.x - bounds.min.x,
+      bounds.max.x - bounds.min.x
+    ) + bounds.min.x;
+
+	this.location.y = THREE.MathUtils.euclideanModulo(
+		this.location.y - bounds.min.y,
+		bounds.max.y - bounds.min.y
+	) + bounds.min.y;
+
+    this.location.z = THREE.MathUtils.euclideanModulo(
+      this.location.z - bounds.min.z,
+      bounds.max.z - bounds.min.z
+    ) + bounds.min.z;
+
+  }
 
 }
