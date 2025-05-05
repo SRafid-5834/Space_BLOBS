@@ -88,6 +88,26 @@ export class Character {
     this.location.addScaledVector(this.velocity, deltaTime);
 
     this.checkBounds(bounds);
-    
+
+    if (this.velocity.length() > 0.001) {
+      const yaw = Math.atan2(this.velocity.x, this.velocity.z);
+
+      // Calculate pitch from vertical velocity vs. horizontal magnitude
+      const horizontalMag = Math.sqrt(this.velocity.x * this.velocity.x + this.velocity.z * this.velocity.z);
+      let pitch = -Math.atan2(this.velocity.y, horizontalMag); // negative if up/down is inverted
+
+      // Clamp pitch so you don't flip upside down
+      const maxPitch = Math.PI / 3; // 60° up/down
+      pitch = Math.max(-maxPitch, Math.min(maxPitch, pitch));
+
+      // Apply pitch (X), yaw (Y), roll (Z=0) in 'YXZ' order
+      this.gameObject.rotation.set(pitch, yaw, .03);
+    }
+    this.gameObject.position.copy(this.location);
+    this.acceleration.setLength(0);
+
+    // Update overdrive state based on speed
+    this.isOverdrive = this.topSpeed > 20;
   }
+  
 }
