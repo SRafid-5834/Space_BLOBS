@@ -190,6 +190,23 @@ export class Character {
         closestObstacle = obstacle;
       }
     }
-  
+    
+    // If we found an obstacle, calculate its radius if it doesn't have one
+    if (closestObstacle && !closestObstacle.radius) {
+      // Try to get the geometry's bounding sphere
+      if (closestObstacle.geometry) {
+        closestObstacle.geometry.computeBoundingSphere();
+        closestObstacle.radius = closestObstacle.geometry.boundingSphere.radius;
+      } else if (closestObstacle.children && closestObstacle.children.length > 0) {
+        // For group objects, estimate the radius from the first child with geometry
+        for (let child of closestObstacle.children) {
+          if (child.geometry) {
+            child.geometry.computeBoundingSphere();
+            closestObstacle.radius = child.geometry.boundingSphere.radius;
+            break;
+          }
+        }
+      }
+      
   }
 }
