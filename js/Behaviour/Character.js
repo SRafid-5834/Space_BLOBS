@@ -109,5 +109,11 @@ export class Character {
     // Update overdrive state based on speed
     this.isOverdrive = this.topSpeed > 20;
   }
+
+  // Apply force to our character
+  applyForce(force) {
+    force.divideScalar(this.mass);
+    this.acceleration.add(force);
+  }
   
 }
