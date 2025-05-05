@@ -75,4 +75,19 @@ export class Character {
 
   }
 
+  // To update our character
+  update(deltaTime, bounds) {
+
+    // Update acceleration via velocity
+    this.velocity.addScaledVector(this.acceleration, deltaTime);
+    if (this.velocity.length() > this.topSpeed) {
+      this.velocity.setLength(this.topSpeed);
+    }
+
+    // Update velocity via location
+    this.location.addScaledVector(this.velocity, deltaTime);
+
+    this.checkBounds(bounds);
+    
+  }
 }
