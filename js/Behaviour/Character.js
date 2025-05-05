@@ -152,6 +152,25 @@ export class Character {
       return new THREE.Vector3();
     }
     
+    // Calculate the vector from character to obstacle
+    let characterToObstacle = obstacle.position.clone().sub(this.location);
+
+    // To accumulate steering forces
+    let totalSteer = new THREE.Vector3();
     
+    // Avoid using all three vectors (center, whisker1, whisker2)
+    let steerCenter = this.avoidCollision(obstacle, characterToObstacle, center);
+    let steerWhisker1 = this.avoidCollision(obstacle, characterToObstacle, whisker1);
+    let steerWhisker2 = this.avoidCollision(obstacle, characterToObstacle, whisker2);
+
+    // Combine avoidance forces from all three vectors
+    totalSteer.add(steerCenter).add(steerWhisker1).add(steerWhisker2);
+    
+    // Limit the force if needed
+    if (totalSteer.length() > this.maxForce) {
+      totalSteer.normalize().multiplyScalar(this.maxForce);
+    }
+
+    return totalSteer;
   }
 }
