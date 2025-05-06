@@ -273,4 +273,27 @@ export class Character {
 
     return steer;
   }
+
+  // Gets the collision point of our 
+  // obstacle and the ray
+  getCollisionPoint(obstacle, ray, scalarProjection) {
+
+    // Get vector projection using scalar projection
+    let vectorProjection = VectorUtil.setLength(ray, scalarProjection);
+    vectorProjection.add(this.location);
+
+    // Use trigonometry to figure out the 
+    // collision point on the circle
+    let opp = VectorUtil.sub(vectorProjection, obstacle.position);
+    let adjLength = Math.sqrt(obstacle.radius**2 - opp.length()**2);
+
+    let collisionLength = scalarProjection - adjLength;
+    let collisionVector = VectorUtil.setLength(ray, collisionLength);
+
+    let collisionPoint = VectorUtil.add(this.location, collisionVector);
+
+    return collisionPoint;
+  }
+
+  
 }
