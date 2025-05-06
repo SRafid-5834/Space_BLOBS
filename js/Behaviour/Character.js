@@ -216,4 +216,23 @@ export class Character {
 
     return closestObstacle;
   }
+
+  // Modify detectCollision method to better handle potential missing properties
+  detectCollision(obstacle, ray, scalarProjection) {
+    // Making sure we have a valid obstacle with a radius
+    if (!obstacle || typeof obstacle.radius === 'undefined') {
+      return false;
+    }
+
+    // clamp our scalar projection to the extents
+    let clampedSP = THREE.MathUtils.clamp(scalarProjection, 0, ray.length());
+
+    // Closest point is our character's location + current ray at a length of the clamped SP
+    let closestPoint = ray.clone().normalize().multiplyScalar(clampedSP);
+    closestPoint.add(this.location);
+
+    // Check if the closest point is within the obstacle's radius
+    return closestPoint.distanceTo(obstacle.position) <= obstacle.radius;
+  }
+  
 }
