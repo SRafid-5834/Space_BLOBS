@@ -254,6 +254,23 @@ export class Character {
       scalarProjection = characterToObstacle.dot(rayNormalized);
     }
 
+    // Check to see if the ray has 
+    // collided with the obstacle
+    let collision = this.detectCollision(obstacle, ray, scalarProjection);
+
+    // If we have collided
+    if (collision) {
+      // Get the point of contact (collision point)
+      // with the ray and obstacle
+      let collisionPoint = this.getCollisionPoint(obstacle, ray, scalarProjection);
     
+      // Get the target to avoid the obstacle
+      let avoidTarget = this.getAvoidTarget(obstacle, collisionPoint, 5);
+
+      // Create steering force to avoid obstacle
+      steer = this.seek(avoidTarget);
+    } 
+
+    return steer;
   }
 }
