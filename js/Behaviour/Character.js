@@ -234,5 +234,26 @@ export class Character {
     // Check if the closest point is within the obstacle's radius
     return closestPoint.distanceTo(obstacle.position) <= obstacle.radius;
   }
-  
+
+  // Avoid collision steering behaviour
+  avoidCollision(obstacle, characterToObstacle, ray) {
+    // If no valid obstacle, return zero vector
+    if (!obstacle || !obstacle.position) {
+      return new THREE.Vector3();
+    }
+
+    let steer = new THREE.Vector3();
+
+    // Project the vector from character to obstacle
+    // onto the character to the end of our ray
+    let scalarProjection = 0;
+    
+    // Calculate scalar projection only if ray has length
+    if (ray.length() > 0) {
+      let rayNormalized = ray.clone().normalize();
+      scalarProjection = characterToObstacle.dot(rayNormalized);
+    }
+
+    
+  }
 }
