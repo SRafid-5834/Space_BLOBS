@@ -295,5 +295,15 @@ export class Character {
     return collisionPoint;
   }
 
+  // Gets the target to avoid our collision
+  getAvoidTarget(obstacle, collisionPoint, howFar) {
+
+    let normal = VectorUtil.sub(collisionPoint, obstacle.position);
+    normal.setLength(howFar);
+    
+    let target = VectorUtil.add(collisionPoint, normal);
+
+    return target;
+  }
   
 }
