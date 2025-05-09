@@ -10,6 +10,15 @@ export class VectorUtil {
 		return v;
 	}
 
+	// Subtracts vector a from b 
+	// Returns a new vector = a - b
+	static sub(a, b) {
+		let v = a.clone();
+		v.sub(b);
+		return v;
+	}
+
 	
+
 
 }
