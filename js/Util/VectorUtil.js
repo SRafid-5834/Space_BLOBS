@@ -1,3 +1,5 @@
+// Code credits to JAY HENDERSON Professor at Memorial University of Newfoundland
+
 import * as THREE from 'three';
 
 export class VectorUtil {
@@ -26,7 +28,13 @@ export class VectorUtil {
 		return v;
 	}
 
-	
+	// Divides vector a by scalar s
+	// Returns a new vector = a / s
+	static divideScalar(a, s) {
+		let v = a.clone();
+		v.divideScalar(s);
+		return v;
+	}
 
 
 }
