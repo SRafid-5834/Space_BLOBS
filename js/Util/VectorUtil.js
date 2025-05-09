@@ -18,6 +18,14 @@ export class VectorUtil {
 		return v;
 	}
 
+	// Multiplies vector a by scalar s
+	// Returns a new vector = a * s
+	static multiplyScalar(a, s) {
+		let v = a.clone();
+		v.multiplyScalar(s);
+		return v;
+	}
+
 	
 
 
