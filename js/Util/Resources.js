@@ -22,5 +22,12 @@ export class Resources {
     await Promise.all(loadPromises);
   }
 
-  
+  get(name) {
+    const model = this.models.get(name);
+    if (!model) {
+      console.warn(`Model "${name}" not found in resources.`);
+      return null;
+    }
+    return model.clone(); // cloned to prevent shared instance issues
+  }
 }
