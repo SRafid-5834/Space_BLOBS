@@ -52,4 +52,11 @@ export class VectorUtil {
 		return v;
 	}
 
+  // Gets the scalar projection of vector a onto b
+	// Returns a scalar = || a proj b ||
+	static scalarProjectOnVector(a, b) {
+		return a.dot(b)/b.length();
+
+	}
+
 }
