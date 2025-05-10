@@ -36,5 +36,13 @@ export class VectorUtil {
 		return v;
 	}
 
+  // Sets length of clone of vector a to s
+	// Returns a new vector = a * s
+	static setLength(a, s) {
+		let v = a.clone();
+		v.setLength(s);
+		return v;
+	}
+  
 
 }
