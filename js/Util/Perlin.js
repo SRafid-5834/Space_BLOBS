@@ -29,5 +29,20 @@ export class Perlin {
     }
   }
   
-  
+  // To actually create our noise
+  noise(x, y, frequency) {
+    // Make sure x and y are positive to avoid negative indices
+    x = Math.abs((x * frequency) % this.size);
+    y = Math.abs((y * frequency) % this.size);
+    
+    // Use Math.floor and ensure indices are within bounds
+    let x0 = Math.floor(x) % this.size;
+    let y0 = Math.floor(y) % this.size;
+    let x1 = (x0 + 1) % this.size;
+    let y1 = (y0 + 1) % this.size;
+    
+    let xoffset = x - x0;
+    let yoffset = y - y0;
+    
+  }
 }
