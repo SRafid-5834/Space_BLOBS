@@ -69,5 +69,12 @@ export class Perlin {
     return t * t * t * (t * (t * 6 - 15) + 10);
   }
   
-  
+  octaveNoise(x, y, baseFrequency, numOctaves, persistence, lacunarity) {
+    let totalNoise = 0;
+    let frequency = baseFrequency;
+    let amplitude = 1;
+    let maxAmplitude = 0;
+    
+    
+  }
 }
