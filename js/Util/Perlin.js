@@ -75,6 +75,15 @@ export class Perlin {
     let amplitude = 1;
     let maxAmplitude = 0;
     
+    for (let i = 0; i < numOctaves; i++) {
+      totalNoise += this.noise(x, y, frequency) * amplitude;
+      maxAmplitude += amplitude;
+      // Decrease our amplitude based on persistence
+      amplitude *= persistence;
+      // Increase our frequency based on lacunarity
+      frequency *= lacunarity;
+    }
     
+    return totalNoise/maxAmplitude;
   }
 }
