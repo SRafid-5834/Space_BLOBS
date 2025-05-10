@@ -65,5 +65,9 @@ export class Perlin {
     return MathUtil.map(average, -1, 1, 0, 1);
   }
   
+  fade(t) {
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  }
+  
   
 }
