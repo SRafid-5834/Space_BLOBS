@@ -8,5 +8,19 @@ export class Resources {
     this.models = new Map(); // stores loaded models
   }
 
+  async loadAll() {
+    const loadPromises = this.files.map(file => 
+      this.loader.loadAsync(file.url)
+        .then(gltf => {
+          this.models.set(file.name, gltf.scene); // store only the scene (model)
+        })
+        .catch(err => {
+          console.error(`Failed to load model: ${file.url}`, err);
+        })
+    );
+
+    await Promise.all(loadPromises);
+  }
+
   
 }
