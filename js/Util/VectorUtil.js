@@ -43,6 +43,13 @@ export class VectorUtil {
 		v.setLength(s);
 		return v;
 	}
-  
+
+  // Projects vector a onto b
+	// Returns a new vector = a proj b
+	static projectOnVector(a, b) {
+		let v = a.clone();
+		v.projectOnVector(b);
+		return v;
+	}
 
 }
