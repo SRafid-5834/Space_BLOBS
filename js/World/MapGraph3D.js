@@ -133,5 +133,23 @@ export class MapGraph3D {
         // Calculate g score
         const gScore = current.g + edge.cost;
         
-        
+        // Check if not in open set or better path found
+        const inOpenSet = openSet.includes(neighbor);
+        if (!inOpenSet || gScore < neighbor.g) {
+          // Update neighbor
+          neighbor.g = gScore;
+          neighbor.h = neighbor.distanceTo(endNode);
+          neighbor.f = neighbor.g + neighbor.h;
+          neighbor.parent = current;
+          
+          if (!inOpenSet) {
+            openSet.push(neighbor);
+          }
+        }
+      }
+    }
+    
+    // No path found
+    return [];
+  }
 }
