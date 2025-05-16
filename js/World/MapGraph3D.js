@@ -92,5 +92,32 @@ export class MapGraph3D {
       node.parent = null;
     }
     
+    const openSet = [];
+    const closedSet = new Set();
     
+    openSet.push(startNode);
+    
+    while (openSet.length > 0) {
+      // Get node with lowest f score
+      let currentIndex = 0;
+      for (let i = 0; i < openSet.length; i++) {
+        if (openSet[i].f < openSet[currentIndex].f) {
+          currentIndex = i;
+        }
+      }
+      
+      const current = openSet[currentIndex];
+      
+      // If we reached the end, reconstruct path
+      if (current === endNode) {
+        const path = [];
+        let temp = current;
+        while (temp) {
+          path.push(temp.position);
+          temp = temp.parent;
+        }
+        return path.reverse();
+      }
+      
+      
 }
