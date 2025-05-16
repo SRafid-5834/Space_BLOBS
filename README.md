@@ -2,7 +2,7 @@
 
 ## Description
 
-"Space Blobs" is a 3D first-person space shooter where you pilot a nimble spacecraft through a perilous asteroid field, battling intelligent alien 'Blobs'. With procedurally generated environments, strategic combat, and dynamic enemy AI, this mission is a challenge. Eliminate all 10 blobs to win—but watch your fuel and lives, or you’ll become space dust!
+"Space BLOBS" is a 3D first-person space shooter where you pilot a nimble spacecraft through a perilous asteroid field, battling intelligent alien 'Blobs'. With procedurally generated environments, strategic combat, and dynamic enemy AI, this mission is a challenge. Eliminate all 10 blobs to win—but watch your fuel and lives, or you’ll become space dust!
 
 ---
 ![image](https://github.com/user-attachments/assets/951b7f19-00ad-497a-9a73-183e5c1e9dde)
