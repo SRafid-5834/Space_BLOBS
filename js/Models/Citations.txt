@@ -1,0 +1,6 @@
+Models are from:
+Sketcfab:
+spaceship - https://sketchfab.com/3d-models/low-poly-spaceship-de307645e6c84b3a8046bd6fcbb7e744
+alien - https://sketchfab.com/3d-models/simple-slime-creature-f176c00e63c24155b2c308b06cdb32d8
+
+I have simply used them for my project and do not claim ownership.
