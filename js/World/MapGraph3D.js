@@ -119,5 +119,19 @@ export class MapGraph3D {
         return path.reverse();
       }
       
+      // Remove current from open set and add to closed set
+      openSet.splice(currentIndex, 1);
+      closedSet.add(current.id);
       
+      // Check all neighbors
+      for (const edge of current.edges) {
+        const neighbor = edge.node;
+        
+        // Skip if already processed
+        if (closedSet.has(neighbor.id)) continue;
+        
+        // Calculate g score
+        const gScore = current.g + edge.cost;
+        
+        
 }
