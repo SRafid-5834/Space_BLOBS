@@ -30,5 +30,31 @@ export class MapGraph3D {
     }
   }
 
+  // Connect nodes to their neighbors
+  connectNodes() {
+    for (const node of this.nodes) {
+      const { x, y, z } = node.position;
+      
+      // Connect to 6 adjacent nodes (up, down, left, right, forward, backward)
+      const directions = [
+        { x: x + this.cellSize, y, z },
+        { x: x - this.cellSize, y, z },
+        { x, y: y + this.cellSize, z },
+        { x, y: y - this.cellSize, z },
+        { x, y, z: z + this.cellSize },
+        { x, y, z: z - this.cellSize }
+      ];
+      
+      for (const pos of directions) {
+        const key = `${pos.x},${pos.y},${pos.z}`;
+        const neighbor = this.nodeMap.get(key);
+        if (neighbor) {
+          const cost = node.distanceTo(neighbor);
+          node.addEdge(neighbor, cost);
+        }
+      }
+    }
+  }
+
   
 }
