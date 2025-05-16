@@ -63,7 +63,7 @@ for (let i = 0; i < asteroidCount; i++) {
 
 // Create aliens array
 const aliens = [];
-const alienCount = 2; // Number of aliens to create
+const alienCount = 10; // Number of aliens to create
 
 // Declare bounds
 let bounds;
