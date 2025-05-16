@@ -12,4 +12,4 @@ export class MathUtil {
 	  return (x-a)/(b-a) * (d-c) + c;
 	}
   
-}
+  }

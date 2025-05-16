@@ -3,6 +3,7 @@ import { VectorUtil } from '../Util/VectorUtil.js';
 import { Character } from './Character.js';
 import { WanderState, PursueState } from './AlienState.js';
 
+
 export class Alien extends Character {
   constructor(color, player, obstacles) {
     super(color);
@@ -173,4 +174,66 @@ export class Alien extends Character {
     return steer;
   }
 
-}  
+  // Helper method to detect collisions
+  detectCollision(obstacle, ray, scalarProjection) {
+    // Make sure we have a valid obstacle with a radius
+    if (!obstacle || typeof obstacle.radius === 'undefined') {
+      // Try to determine radius from geometry if available
+      if (obstacle.geometry) {
+        obstacle.geometry.computeBoundingSphere();
+        obstacle.radius = obstacle.geometry.boundingSphere.radius;
+      } else if (obstacle.children && obstacle.children.length > 0) {
+        // For group objects, estimate the radius from the first child with geometry
+        for (let child of obstacle.children) {
+          if (child.geometry) {
+            child.geometry.computeBoundingSphere();
+            obstacle.radius = child.geometry.boundingSphere.radius;
+            break;
+          }
+        }
+      } else {
+        // Default radius if we couldn't calculate one
+        obstacle.radius = 1.0;
+      }
+    }
+
+    // clamp our scalar projection to the extents
+    let clampedSP = THREE.MathUtils.clamp(scalarProjection, 0, ray.length());
+
+    // Closest point is our character's location + current ray at a length of the clamped SP
+    let closestPoint = ray.clone().normalize().multiplyScalar(clampedSP);
+    closestPoint.add(this.location);
+
+    // Check if the closest point is within the obstacle's radius
+    return closestPoint.distanceTo(obstacle.position) <= obstacle.radius;
+  }
+
+  // Get collision point with obstacle
+  getCollisionPoint(obstacle, ray, scalarProjection) {
+    // Get vector projection using scalar projection
+    let vectorProjection = ray.clone().normalize().multiplyScalar(scalarProjection);
+    vectorProjection.add(this.location);
+
+    // Use trigonometry to figure out the 
+    // collision point on the circle
+    let opp = new THREE.Vector3().subVectors(vectorProjection, obstacle.position);
+    let adjLength = Math.sqrt(Math.pow(obstacle.radius, 2) - Math.pow(opp.length(), 2));
+
+    let collisionLength = scalarProjection - adjLength;
+    let collisionVector = ray.clone().normalize().multiplyScalar(collisionLength);
+
+    let collisionPoint = new THREE.Vector3().addVectors(this.location, collisionVector);
+
+    return collisionPoint;
+  }
+  
+  // Get avoid target
+  getAvoidTarget(obstacle, collisionPoint, howFar) {
+    let normal = new THREE.Vector3().subVectors(collisionPoint, obstacle.position);
+    normal.setLength(howFar);
+    
+    let target = new THREE.Vector3().addVectors(collisionPoint, normal);
+
+    return target;
+  }
+}

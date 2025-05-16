@@ -40,7 +40,6 @@ function createLivesUI(initialLives) {
   document.body.appendChild(livesContainer);
 }
 
-
 // Function to create the alien indicators UI
 function createAlienCountUI(alienCount) {
   // Create container for alien indicators

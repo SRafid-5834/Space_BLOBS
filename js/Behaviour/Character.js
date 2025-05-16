@@ -103,6 +103,7 @@ export class Character {
       // Apply pitch (X), yaw (Y), roll (Z=0) in 'YXZ' order
       this.gameObject.rotation.set(pitch, yaw, .03);
     }
+
     this.gameObject.position.copy(this.location);
     this.acceleration.setLength(0);
 
@@ -172,7 +173,7 @@ export class Character {
     }
 
     return totalSteer;
-  }
+}
 
   // Modify the closestObject method to also calculate and store the radius:
   closestObject(obstacles) {
@@ -305,5 +306,4 @@ export class Character {
 
     return target;
   }
-  
 }

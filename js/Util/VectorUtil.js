@@ -1,5 +1,3 @@
-// Code credits to JAY HENDERSON Professor at Memorial University of Newfoundland
-
 import * as THREE from 'three';
 
 export class VectorUtil {
@@ -36,7 +34,8 @@ export class VectorUtil {
 		return v;
 	}
 
-  // Sets length of clone of vector a to s
+
+	// Sets length of clone of vector a to s
 	// Returns a new vector = a * s
 	static setLength(a, s) {
 		let v = a.clone();
@@ -44,7 +43,7 @@ export class VectorUtil {
 		return v;
 	}
 
-  // Projects vector a onto b
+	// Projects vector a onto b
 	// Returns a new vector = a proj b
 	static projectOnVector(a, b) {
 		let v = a.clone();
@@ -52,11 +51,12 @@ export class VectorUtil {
 		return v;
 	}
 
-  // Gets the scalar projection of vector a onto b
+	// Gets the scalar projection of vector a onto b
 	// Returns a scalar = || a proj b ||
 	static scalarProjectOnVector(a, b) {
 		return a.dot(b)/b.length();
 
 	}
+
 
 }

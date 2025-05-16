@@ -54,7 +54,7 @@ export class Asteroid {
     
     return asteroid;
   }
-
+  
   applyShapeVariations(geometry, radius) {
     const positionAttribute = geometry.attributes.position;
     const vertices = positionAttribute.array;
@@ -68,7 +68,7 @@ export class Asteroid {
     positionAttribute.needsUpdate = true;
     geometry.computeVertexNormals();
   }
-
+  
   applyLargeShapeVariations(vertices, radius) {
     // Choose a random shape variation type
     const variationType = Math.floor(Math.random() * 5);
@@ -82,7 +82,7 @@ export class Asteroid {
           vertices[i + stretchAxis] *= stretchFactor;
         }
         break;
-
+        
       case 1: // Flattened shape
         const flattenAxis = Math.floor(Math.random() * 3);
         const flattenFactor = 0.6 + Math.random() * 0.3;
@@ -90,7 +90,7 @@ export class Asteroid {
           vertices[i + flattenAxis] *= flattenFactor;
         }
         break;
-      
+        
       case 2: // Ridge or crater
         const ridgeFrequency = 2 + Math.floor(Math.random() * 3);
         const ridgeDepth = 0.1 + Math.random() * 0.2;
@@ -112,7 +112,7 @@ export class Asteroid {
           vertices[i + 2] = (z / length) * (radius + ridge);
         }
         break;
-      
+        
       case 3: // Large protrusion
         const bumpSize = 0.5 + Math.random() * 0.3;
         const bumpCenter = {
@@ -146,13 +146,13 @@ export class Asteroid {
           vertices[i + 2] = nz * (radius + bump);
         }
         break;
-      
-        case 4: // Angular edges
+        
+      case 4: // Angular edges
         // Just leave as is for some asteroids to maintain angular look
         break;
     }
   }
-
+  
   applyNoiseToGeometry(geometry, radius) {
     const positionAttribute = geometry.attributes.position;
     const vertices = positionAttribute.array;
@@ -192,12 +192,11 @@ export class Asteroid {
       vertices[i + 2] += nz * distortion;
     }
   }
-    
+  
   // Method to update asteroid rotation - call this in your main update loop
   update() {
     this.gameObject.rotation.x += this.rotationSpeed.x;
     this.gameObject.rotation.y += this.rotationSpeed.y;
     this.gameObject.rotation.z += this.rotationSpeed.z;
   }
-  
 }

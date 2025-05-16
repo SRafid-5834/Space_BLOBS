@@ -18,6 +18,7 @@ import {
   gameOver
 } from './UI.js';
 
+
 // Create Scene
 const scene = new THREE.Scene();
 
@@ -270,12 +271,52 @@ function damagePlayer() {
     // Check for game over
     if (playerLives <= 0) {
       isGameOver = true;
-      gameOver(init);
+      gameOver(restartGame);
     }
   }
 }
 
-// SKIPPING GAME RESTART LOGIC FOR NOW
+// Function to restart the game
+function restartGame() {
+  // // Reset game state
+  // playerLives = 5;
+  // isGameOver = false;
+  // invincibilityFrames = 0;
+  // fuelLevel = 100; // Reset fuel to full
+  // isFuelDepleted = false;
+  // updateFuelGauge(); // Update the visual gauge
+  
+  // // Update lives display
+  // document.getElementById('lives-digit').textContent = playerLives;
+  
+  // // Reset alien indicators
+  // resetAlienIndicators();
+  
+  // // Remove all aliens
+  // for (let alien of aliens) {
+  //   scene.remove(alien.gameObject);
+  // }
+  // aliens.length = 0; // Clear the array
+  
+  // // Create new aliens
+  // for (let i = 0; i < alienCount; i++) {
+  //   const alien = new Alien(0x000000, player, asteroids);
+    
+  //   alien.setModel(resources.get('blob'));
+    
+  //   // Random position within bounds
+  //   const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
+  //   const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
+  //   const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
+    
+  //   alien.location = new THREE.Vector3(x, y, z);
+  //   alien.isDead = false; // Ensuring they're not marked as dead
+    
+  //   aliens.push(alien);
+  //   scene.add(alien.gameObject);
+  // }
+  init(); // Reinitialize the game
+}
 
 function initializePathfinding() {
   // Create a graph covering the game bounds
@@ -306,27 +347,6 @@ function initializePathfinding() {
     
     // Enter the state explicitly
     pathfindState.enter(alien);
-  }
-}
-
-function spawnAlien(count){
-  // Create {count} aliens at random positions
-  for (let i = 0; i < count; i++) {
-    const alien = new Alien(0x000000, player, asteroids);
-    alien.setModel(resources.get('blob'));
-    
-    // Settibg scene reference immediately
-    alien.scene = scene;
-    
-    // Random position within bounds
-    const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
-    const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
-    const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
-    
-    alien.location = new THREE.Vector3(x, y, z);
-    
-    aliens.push(alien);
-    scene.add(alien.gameObject);
   }
 }
 
@@ -361,24 +381,23 @@ function init() {
   createForwardLine();
 
   // Create 10 aliens at random positions
-  // for (let i = 0; i < alienCount; i++) {
-  //   const alien = new Alien(0x000000, player, asteroids);
-  //   alien.setModel(resources.get('blob'));
+  for (let i = 0; i < alienCount; i++) {
+    const alien = new Alien(0x000000, player, asteroids);
+    alien.setModel(resources.get('blob'));
     
-  //   // Settibg scene reference immediately
-  //   alien.scene = scene;
+    // Settibg scene reference immediately
+    alien.scene = scene;
     
-  //   // Random position within bounds
-  //   const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
-  //   const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
-  //   const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
+    // Random position within bounds
+    const x = Math.random() * (bounds.max.x - bounds.min.x) + bounds.min.x;
+    const y = Math.random() * (bounds.max.y - bounds.min.y) + bounds.min.y;
+    const z = Math.random() * (bounds.max.z - bounds.min.z) + bounds.min.z;
     
-  //   alien.location = new THREE.Vector3(x, y, z);
+    alien.location = new THREE.Vector3(x, y, z);
     
-  //   aliens.push(alien);
-  //   scene.add(alien.gameObject);
-  // }
-  spawnAlien(alienCount); // Create alien
+    aliens.push(alien);
+    scene.add(alien.gameObject);
+  }
 
   initializePathfinding(); // Initialize pathfinding for aliens
 
@@ -534,7 +553,7 @@ function animate() {
             // Check for victory (all aliens destroyed)
             if (aliens.length === 0) {
               console.log("Victory! All aliens destroyed");
-              showVictory(init);
+              showVictory(restartGame);
             }
           }
         }

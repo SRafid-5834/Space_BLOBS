@@ -35,7 +35,7 @@ export class PathfindState extends AlienState {
     this.reachedTarget = false;
     this.pathfindingComplete = false;
   }
-
+  
   enter(alien) {
     console.log("Alien entering Pathfind state to initial player position");
 
@@ -64,7 +64,7 @@ export class PathfindState extends AlienState {
       this.transition(alien, new WanderState());
     }
   }
-
+  
   update(alien, deltaTime) {
     // If pathfinding is complete, transition to wander
     if (this.pathfindingComplete) {
@@ -91,7 +91,7 @@ export class PathfindState extends AlienState {
         currentWaypoint.y,
         currentWaypoint.z
       );
-
+      
       // Calculate distance to current waypoint
       const distanceToWaypoint = alien.location.distanceTo(target);
       
@@ -131,7 +131,7 @@ export class WanderState extends AlienState {
     // Reset any pursuit-related variables
     alien.targetPosition = null;
   }
-    
+  
   update(alien, deltaTime) {
     // Calculate distance to player
     let distanceToPlayer = alien.location.distanceTo(alien.player.location);
@@ -161,7 +161,7 @@ export class PursueState extends AlienState {
     // Possibly increase speed or prepare for pursuit
     alien.topSpeed = alien.pursuitSpeed;
   }
-
+  
   update(alien, deltaTime) {
     // Calculate distance to player
     let distanceToPlayer = alien.location.distanceTo(alien.player.location);
