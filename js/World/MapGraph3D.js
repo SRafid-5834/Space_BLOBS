@@ -56,5 +56,25 @@ export class MapGraph3D {
     }
   }
 
+  // Find the closest node to a 3D position
+  findClosestNode(position) {
+    let closestNode = null;
+    let minDistance = Infinity;
+    
+    for (const node of this.nodes) {
+      const dx = node.position.x - position.x;
+      const dy = node.position.y - position.y;
+      const dz = node.position.z - position.z;
+      const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestNode = node;
+      }
+    }
+    
+    return closestNode;
+  }
+  
   
 }
