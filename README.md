@@ -10,7 +10,14 @@
 
 ## How To Run
 
+- Method 1:
 
+Go to `https://spaceblobs.vercel.app/` and enjoy the game!
+  
+- Method 2:
+
+If you would like to run it locally,
+First, clone the repo.
 After opening the file in the command line, input the following lines of code:
 
 ```
@@ -19,7 +26,7 @@ npm install vite
 npx vite
 ```
 
-It should open a link like: `http://localhost:5173/` Head over to the link and enjoy the game!
+It should open a link like: `http://localhost:5173/`. Head over to the link and enjoy the game!
 
 (Note: You may have to wait a few seconds for the game to set up, particularly for the first time running ☺️.)
 
