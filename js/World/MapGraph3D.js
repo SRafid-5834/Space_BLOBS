@@ -76,5 +76,21 @@ export class MapGraph3D {
     return closestNode;
   }
   
-  
+  // A* pathfinding algorithm
+  findPath(startPos, endPos) {
+    // Find closest nodes to the start and end positions
+    const startNode = this.findClosestNode(startPos);
+    const endNode = this.findClosestNode(endPos);
+    
+    if (!startNode || !endNode) return [];
+    
+    // Reset nodes
+    for (const node of this.nodes) {
+      node.f = 0;
+      node.g = 0;
+      node.h = 0;
+      node.parent = null;
+    }
+    
+    
 }
