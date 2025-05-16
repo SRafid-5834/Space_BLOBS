@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "./lib/three.module.js";
 import { VectorUtil } from '../Util/VectorUtil.js';
 
 export class Character {

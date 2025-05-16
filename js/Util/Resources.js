@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from "./lib/three.module.js";
+import { GLTFLoader } from "./lib/GLTFLoader.js";
 
 export class Resources {
   constructor(fileList) {

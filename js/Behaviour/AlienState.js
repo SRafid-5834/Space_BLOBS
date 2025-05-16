@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "./lib/three.module.js";
 
 // Base State class for Alien
 export class AlienState {
