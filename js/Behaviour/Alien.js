@@ -1,4 +1,4 @@
-import * as THREE from "./lib/three.module.js";
+import * as THREE from "/lib/three.module.js";
 import { VectorUtil } from '../Util/VectorUtil.js';
 import { Character } from './Character.js';
 import { WanderState, PursueState } from './AlienState.js';

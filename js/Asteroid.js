@@ -1,4 +1,4 @@
-import * as THREE from "./lib/three.module.js";
+import * as THREE from "/lib/three.module.js";
 import { Perlin } from './Util/Perlin.js';
 
 export class Asteroid {

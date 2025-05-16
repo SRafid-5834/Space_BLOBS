@@ -1,4 +1,4 @@
-import * as THREE from "./lib/three.module.js";
+import * as THREE from "/lib/three.module.js";
 import { Character } from './Behaviour/Character.js';
 import { Alien } from './Behaviour/Alien.js';
 import { ThirdPersonCamera } from './Behaviour/ThirdPersonCamera.js';
